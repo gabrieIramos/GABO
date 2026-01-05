@@ -15,11 +15,12 @@ export class CreateProductDto {
   @Min(0)
   price: number;
 
-  @ApiProperty({ example: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'] })
+  @ApiPropertyOptional({ example: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'] })
+  @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @IsString({ each: true })
-  images: string[];
+  images?: string[];
 
   @ApiProperty({ example: 'Camisa oficial da Seleção Brasileira 2024' })
   @IsString()

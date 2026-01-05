@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
@@ -6,6 +6,7 @@ import { Review } from './entities/review.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class ProductsService {
@@ -14,10 +15,13 @@ export class ProductsService {
     private productsRepository: Repository<Product>,
     @InjectRepository(Review)
     private reviewsRepository: Repository<Review>,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
-    const product = this.productsRepository.create(createProductDto);
+  async create(createProductDto: CreateProductDto, files?: Express.Multer.File[]): Promise<Product> {
+    const images = await this.resolveImages(files, createProductDto.images);
+
+    const product = this.productsRepository.create({ ...createProductDto, images });
     return await this.productsRepository.save(product);
   }
 
@@ -57,9 +61,12 @@ export class ProductsService {
     });
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(id: string, updateProductDto: UpdateProductDto, files?: Express.Multer.File[]): Promise<Product> {
     const product = await this.findOne(id);
-    Object.assign(product, updateProductDto);
+
+    const images = await this.resolveImages(files, updateProductDto.images, product.images);
+
+    Object.assign(product, { ...updateProductDto, images });
     return await this.productsRepository.save(product);
   }
 
@@ -95,5 +102,25 @@ export class ProductsService {
       where: { productId },
       order: { createdAt: 'DESC' },
     });
+  }
+
+  private async resolveImages(
+    files?: Express.Multer.File[],
+    dtoImages?: string[],
+    currentImages?: string[],
+  ): Promise<string[]> {
+    if (files?.length) {
+      return await this.cloudinaryService.uploadMany(files);
+    }
+
+    if (dtoImages?.length) {
+      return dtoImages;
+    }
+
+    if (currentImages?.length) {
+      return currentImages;
+    }
+
+    throw new BadRequestException('Pelo menos uma imagem é obrigatória');
   }
 }
