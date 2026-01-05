@@ -32,6 +32,83 @@ export class ProductsService {
     });
   }
 
+  async findWithFilters(filters: {
+    category?: string;
+    team?: string;
+    size?: string;
+    search?: string;
+    isNew?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+    sortBy?: 'price_asc' | 'price_desc' | 'newest';
+  }): Promise<Product[]> {
+    let query = this.productsRepository.createQueryBuilder('product').leftJoinAndSelect('product.reviews', 'reviews');
+
+    if (filters.category) {
+      query = query.where('LOWER(product.category) = LOWER(:category)', { category: filters.category });
+    }
+
+    if (filters.team) {
+      query = query.andWhere('LOWER(product.team) = LOWER(:team)', { team: filters.team });
+    }
+
+    if (filters.search) {
+      query = query.andWhere(
+        '(LOWER(product.name) LIKE LOWER(:search) OR LOWER(product.description) LIKE LOWER(:search))',
+        { search: `%${filters.search}%` },
+      );
+    }
+
+    if (filters.isNew !== undefined) {
+      query = query.andWhere('product.isNew = :isNew', { isNew: filters.isNew });
+    }
+
+    if (filters.minPrice !== undefined && filters.minPrice !== null) {
+      const minPrice = Number(filters.minPrice);
+      if (!isNaN(minPrice)) {
+        query = query.andWhere('product.price >= :minPrice', { minPrice });
+      }
+    }
+
+    if (filters.maxPrice !== undefined && filters.maxPrice !== null) {
+      const maxPrice = Number(filters.maxPrice);
+      if (!isNaN(maxPrice)) {
+        query = query.andWhere('product.price <= :maxPrice', { maxPrice });
+      }
+    }
+
+    // Size filter: check if size exists in the simple-array column (stored as comma-separated text)
+    if (filters.size) {
+      // Escape special characters for LIKE pattern
+      const escapedSize = filters.size.replace(/[%_\\]/g, '\\$&');
+      query = query.andWhere(
+        "(product.sizes LIKE :sizePattern1 OR product.sizes LIKE :sizePattern2 OR product.sizes LIKE :sizePattern3 OR product.sizes = :exactSize)",
+        {
+          sizePattern1: `${escapedSize},%`, // P,M,G,GG (tamanho no início)
+          sizePattern2: `%,${escapedSize},%`, // M,P,G (tamanho no meio)
+          sizePattern3: `%,${escapedSize}`, // M,P,G (tamanho no final)
+          exactSize: escapedSize, // Somente esse tamanho (se houver apenas um)
+        },
+      );
+    }
+
+    // Apply sorting
+    switch (filters.sortBy) {
+      case 'price_asc':
+        query = query.orderBy('product.price', 'ASC');
+        break;
+      case 'price_desc':
+        query = query.orderBy('product.price', 'DESC');
+        break;
+      case 'newest':
+      default:
+        query = query.orderBy('product.createdAt', 'DESC');
+        break;
+    }
+
+    return await query.getMany();
+  }
+
   async findOne(id: string): Promise<Product> {
     const product = await this.productsRepository.findOne({
       where: { id },

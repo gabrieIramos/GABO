@@ -20,7 +20,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="text-xl tracking-tight mb-4">Hubra</h3>
+            <h3 className="text-xl tracking-tight mb-4">GABO</h3>
             <p className="text-gray-400 text-sm">
               A melhor loja de camisas de futebol do Brasil. Produtos oficiais e entrega rápida.
             </p>
@@ -106,7 +106,7 @@ export function Footer() {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © 2026 Hubra. Todos os direitos reservados.
+            © 2026 GABO. Todos os direitos reservados.
           </p>
         </div>
       </div>

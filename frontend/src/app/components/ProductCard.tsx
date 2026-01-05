@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Product } from '../data/products';
 import { motion } from 'motion/react';
+import { getPromoPricing } from '../utils/priceUtils';
+import { Product } from '../services/productsApi';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const price = Number(product.price) || 0;
+  const { originalPrice, discountPercent } = getPromoPricing(product.id, price);
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -30,9 +34,17 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.team}
           </p>
           <h3 className="text-sm group-hover:underline">{product.name}</h3>
-          <p className="text-sm">
-            R$ {product.price.toFixed(2).replace('.', ',')}
-          </p>
+          <div className="flex items-baseline gap-2 text-sm">
+            <span className="text-gray-400 line-through">
+              R$ {originalPrice.toFixed(2).replace('.', ',')}
+            </span>
+            <span className="font-medium">
+              R$ {price.toFixed(2).replace('.', ',')}
+            </span>
+            <span className="text-xs bg-black text-white px-2 py-0.5 uppercase tracking-wide">
+              -{discountPercent}%
+            </span>
+          </div>
         </div>
       </Link>
     </motion.div>

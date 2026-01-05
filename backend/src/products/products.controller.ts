@@ -72,21 +72,36 @@ export class ProductsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar todos os produtos' })
+  @ApiOperation({ summary: 'Listar todos os produtos com filtros opcionais' })
   @ApiQuery({ name: 'category', required: false, description: 'Filtrar por categoria' })
   @ApiQuery({ name: 'team', required: false, description: 'Filtrar por time' })
+  @ApiQuery({ name: 'size', required: false, description: 'Filtrar por tamanho (P, M, G, GG)' })
+  @ApiQuery({ name: 'search', required: false, description: 'Buscar por nome ou descrição' })
+  @ApiQuery({ name: 'isNew', required: false, description: 'Filtrar apenas lançamentos (true/false)' })
+  @ApiQuery({ name: 'minPrice', required: false, description: 'Preço mínimo' })
+  @ApiQuery({ name: 'maxPrice', required: false, description: 'Preço máximo' })
+  @ApiQuery({ name: 'sortBy', required: false, description: 'price_asc, price_desc, ou newest' })
   @ApiResponse({ status: 200, description: 'Lista de produtos retornada com sucesso' })
   findAll(
     @Query('category') category?: string,
     @Query('team') team?: string,
+    @Query('size') size?: string,
+    @Query('search') search?: string,
+    @Query('isNew') isNew?: string,
+    @Query('minPrice') minPrice?: string,
+    @Query('maxPrice') maxPrice?: string,
+    @Query('sortBy') sortBy?: 'price_asc' | 'price_desc' | 'newest',
   ) {
-    if (category) {
-      return this.productsService.findByCategory(category);
-    }
-    if (team) {
-      return this.productsService.findByTeam(team);
-    }
-    return this.productsService.findAll();
+    return this.productsService.findWithFilters({
+      category,
+      team,
+      size,
+      search,
+      isNew: isNew === 'true' ? true : isNew === 'false' ? false : undefined,
+      minPrice: minPrice ? parseFloat(minPrice) : undefined,
+      maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
+      sortBy: sortBy || 'newest',
+    });
   }
 
   @Get(':id')

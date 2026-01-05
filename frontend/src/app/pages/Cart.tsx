@@ -119,9 +119,12 @@ export function Cart() {
               </div>
             </div>
 
-            <button className="w-full bg-black text-white py-4 uppercase tracking-wider hover:bg-gray-900 transition-colors">
+            <Link
+              to="/checkout"
+              className="w-full inline-block text-center bg-black text-white py-4 uppercase tracking-wider hover:bg-gray-900 transition-colors"
+            >
               Finalizar Compra
-            </button>
+            </Link>
 
             <Link
               to="/"

@@ -7,7 +7,7 @@ export function Terms() {
         <section>
           <h2 className="text-2xl mb-4">1. Aceitação dos Termos</h2>
           <p className="text-gray-700">
-            Ao acessar e utilizar o site da Hubra, você concorda em cumprir e estar vinculado a 
+            Ao acessar e utilizar o site da GABO, você concorda em cumprir e estar vinculado a 
             estes Termos de Uso. Se você não concorda com alguma parte destes termos, não deve usar nosso 
             site ou serviços. Reservamo-nos o direito de modificar estes termos a qualquer momento, e é 
             sua responsabilidade revisá-los periodicamente.
@@ -49,7 +49,7 @@ export function Terms() {
           <h2 className="text-2xl mb-4">5. Propriedade Intelectual</h2>
           <p className="text-gray-700">
             Todo o conteúdo do site, incluindo textos, gráficos, logotipos, imagens e software, é 
-            propriedade da Hubra ou de seus fornecedores de conteúdo e está protegido por leis de 
+            propriedade da GABO ou de seus fornecedores de conteúdo e está protegido por leis de 
             direitos autorais e outras leis de propriedade intelectual. Você não pode reproduzir, 
             distribuir ou criar trabalhos derivados sem nossa permissão expressa por escrito.
           </p>
@@ -68,7 +68,7 @@ export function Terms() {
         <section>
           <h2 className="text-2xl mb-4">7. Limitação de Responsabilidade</h2>
           <p className="text-gray-700">
-            A Hubra não será responsável por quaisquer danos indiretos, incidentais, especiais ou 
+            A GABO não será responsável por quaisquer danos indiretos, incidentais, especiais ou 
             consequenciais decorrentes do uso ou incapacidade de usar nosso site ou produtos. Nossa 
             responsabilidade total em qualquer reivindicação não excederá o valor pago pelo produto em 
             questão.

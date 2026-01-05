@@ -7,7 +7,7 @@ export function Privacy() {
         <section>
           <h2 className="text-2xl mb-4">1. Coleta de Informações</h2>
           <p className="text-gray-700">
-            A Hubra coleta informações pessoais que você fornece voluntariamente ao criar uma conta, 
+            A GABO coleta informações pessoais que você fornece voluntariamente ao criar uma conta, 
             fazer uma compra ou se inscrever em nosso boletim informativo. Isso pode incluir seu nome, 
             endereço de e-mail, endereço de entrega, informações de pagamento e número de telefone.
           </p>

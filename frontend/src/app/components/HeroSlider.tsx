@@ -10,7 +10,7 @@ const slides = [
     subtitle: 'Nova camisa oficial 2024',
     image: 'https://images.unsplash.com/photo-1571190894029-caa26b1f4c09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920',
     cta: 'Comprar Agora',
-    link: '/product/1'
+    link: '/product/ada3837e-3346-4f85-b46f-9bad6edffc5d'
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const slides = [
     subtitle: 'Até 30% de desconto em camisas selecionadas',
     image: 'https://images.unsplash.com/photo-1676746424114-56d38af59256?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920',
     cta: 'Ver Ofertas',
-    link: '/category/champions'
+    link: '/products?category=Clubes'
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const slides = [
     subtitle: 'Reviva os momentos históricos',
     image: 'https://images.unsplash.com/photo-1616124619460-ff4ed8f4683c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1920',
     cta: 'Explorar',
-    link: '/category/retro'
+    link: '/products?category=Seleções'
   }
 ];
 

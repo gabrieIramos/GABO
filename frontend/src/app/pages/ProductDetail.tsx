@@ -1,16 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, ChevronLeft } from 'lucide-react';
-import { products } from '../data/products';
+import { Star, ChevronLeft, Loader2 } from 'lucide-react';
+import { fetchProductById, Product } from '../services/productsApi';
 import { useCartStore } from '../store/useCartStore';
 import { motion } from 'motion/react';
+import { getPromoPricing } from '../utils/priceUtils';
+import { useToastStore } from '../store/useToastStore';
 
 export function ProductDetail() {
   const { id } = useParams();
-  const product = products.find((p) => p.id === id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const addItem = useCartStore((state) => state.addItem);
+  const showToast = useToastStore((state) => state.showToast);
+
+  useEffect(() => {
+    async function loadProduct() {
+      if (!id) return;
+      setLoading(true);
+      try {
+        const data = await fetchProductById(id);
+        setProduct(data);
+      } catch (err) {
+        console.error(err);
+        showToast({
+          title: 'Produto não encontrado',
+          description: 'Tente voltar para a página inicial.',
+          variant: 'error',
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProduct();
+  }, [id, showToast]);
+
+  if (loading) {
+    return (
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -23,9 +56,11 @@ export function ProductDetail() {
     );
   }
 
+  const { originalPrice, discountPercent } = getPromoPricing(product.id, product.price);
+
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert('Por favor, selecione um tamanho');
+      showToast({ title: 'Selecione um tamanho', description: 'Escolha uma opção antes de adicionar ao carrinho.', variant: 'error' });
       return;
     }
 
@@ -38,7 +73,7 @@ export function ProductDetail() {
       team: product.team,
     });
 
-    alert('Produto adicionado ao carrinho!');
+    showToast({ title: 'Adicionado ao carrinho', description: `${product.name} - Tamanho ${selectedSize}`, variant: 'success' });
   };
 
   return (
@@ -103,12 +138,20 @@ export function ProductDetail() {
                 ))}
               </div>
               <span className="text-sm text-gray-600">
-                {product.rating} ({product.reviews.length} avaliações)
+                {product.rating} ({product.reviews?.length || 0} avaliações)
               </span>
             </div>
-            <p className="text-2xl">
-              R$ {product.price.toFixed(2).replace('.', ',')}
-            </p>
+            <div className="flex items-baseline gap-3 text-2xl">
+              <span className="text-gray-400 line-through text-lg">
+                R$ {originalPrice.toFixed(2).replace('.', ',')}
+              </span>
+              <span className="font-semibold">
+                R$ {product.price.toFixed(2).replace('.', ',')}
+              </span>
+              <span className="text-sm bg-black text-white px-3 py-1 uppercase tracking-wide">
+                -{discountPercent}%
+              </span>
+            </div>
           </div>
 
           {/* Size Selector */}
@@ -150,11 +193,11 @@ export function ProductDetail() {
       </div>
 
       {/* Reviews */}
-      {product.reviews.length > 0 && (
+      {product.reviews && product.reviews.length > 0 && (
         <section className="mt-16 border-t pt-16">
           <h2 className="text-2xl tracking-tight mb-8">Avaliações</h2>
           <div className="space-y-6 max-w-3xl">
-            {product.reviews.map((review) => (
+            {product.reviews.map((review: any) => (
               <motion.div
                 key={review.id}
                 initial={{ opacity: 0, y: 20 }}

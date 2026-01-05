@@ -3,12 +3,15 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { PagePlaceholder } from './components/PagePlaceholder';
 import { Home } from './pages/Home';
+import { AllProducts } from './pages/AllProducts';
 import { ProductDetail } from './pages/ProductDetail';
 import { Cart } from './pages/Cart';
 import { Profile } from './pages/Profile';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { About } from './pages/About';
+import { ToastContainer } from './components/ToastContainer';
+import { Checkout } from './pages/Checkout';
 
 export default function App() {
   return (
@@ -18,17 +21,18 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/products" element={<AllProducts />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
-            <Route path="/category/:category" element={<Home />} />
             <Route path="/about" element={<About /> } />                        
             <Route path="/returns" element={
               <PagePlaceholder 
                 title="Trocas e Devoluções" 
-                description="Política de trocas e devoluções da Hubra." 
+                description="Política de trocas e devoluções da GABO." 
               />
             } />
             <Route path="/shipping" element={
@@ -40,6 +44,7 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        <ToastContainer />
       </div>
     </BrowserRouter>
   );

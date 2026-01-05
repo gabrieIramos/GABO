@@ -6,6 +6,8 @@ import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
 import { AuthModule } from './auth/auth.module';
+import { SeedService } from './seed.service';
+import { Product } from './products/entities/product.entity';
 
 @Module({
   imports: [
@@ -18,10 +20,12 @@ import { AuthModule } from './auth/auth.module';
       useFactory: getTypeOrmConfig,
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature([Product]),
     AuthModule,
     UsersModule,
     ProductsModule,
     OrdersModule,
   ],
+  providers: [SeedService],
 })
 export class AppModule {}
