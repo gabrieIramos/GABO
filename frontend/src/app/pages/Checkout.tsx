@@ -114,13 +114,13 @@ export function Checkout() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 lg:px-12 py-10 space-y-10">
+    <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 py-6 md:py-10 space-y-8 md:space-y-10">
       <header className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <p className="text-sm text-gray-500 uppercase tracking-wider">Checkout</p>
-          <h1 className="text-3xl md:text-4xl tracking-tight">Finalize sua compra</h1>
+          <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Checkout</p>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl tracking-tight">Finalize sua compra</h1>
         </div>
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-1 md:gap-2 text-xs md:text-sm">
           {steps.map((s, idx) => {
             const completed = steps.indexOf(step) > idx;
             const active = step === s;
@@ -141,15 +141,15 @@ export function Checkout() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 md:gap-8">
         <div className="space-y-6">
           {step === 'Autenticação' && (
-            <section className="border p-6 space-y-4">
+            <section className="border p-4 md:p-6 space-y-4">
               <div className="flex items-center gap-3">
-                <LogIn className="w-5 h-5" />
+                <LogIn className="w-4 h-4 md:w-5 md:h-5" />
                 <div>
-                  <h2 className="text-lg font-semibold">Entrar ou cadastrar</h2>
-                  <p className="text-sm text-gray-600">Precisamos confirmar sua conta para continuar.</p>
+                  <h2 className="text-base md:text-lg font-semibold">Entrar ou cadastrar</h2>
+                  <p className="text-xs md:text-sm text-gray-600">Precisamos confirmar sua conta para continuar.</p>
                 </div>
               </div>
 
@@ -181,7 +181,7 @@ export function Checkout() {
               <div className="flex justify-end">
                 <button
                   onClick={handleProceedFromAuth}
-                  className="bg-black text-white px-5 py-3 uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+                  className="bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
                   disabled={!canContinueAuth}
                 >
                   Continuar
@@ -191,12 +191,12 @@ export function Checkout() {
           )}
 
           {step === 'Endereço' && (
-            <section className="border p-6 space-y-6">
+            <section className="border p-4 md:p-6 space-y-6">
               <div className="flex items-center gap-3">
-                <Home className="w-5 h-5" />
+                <Home className="w-4 h-4 md:w-5 md:h-5" />
                 <div>
-                  <h2 className="text-lg font-semibold">Endereço de entrega</h2>
-                  <p className="text-sm text-gray-600">Escolha um endereço salvo ou cadastre um novo.</p>
+                  <h2 className="text-base md:text-lg font-semibold">Endereço de entrega</h2>
+                  <p className="text-xs md:text-sm text-gray-600">Escolha um endereço salvo ou cadastre um novo.</p>
                 </div>
               </div>
 
@@ -234,8 +234,8 @@ export function Checkout() {
               )}
 
               <div className="border-t pt-4 space-y-3">
-                <h3 className="font-semibold text-sm uppercase tracking-wide">Cadastrar novo endereço</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <h3 className="font-semibold text-xs md:text-sm uppercase tracking-wide">Cadastrar novo endereço</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
                   <input
                     className="border px-3 py-2"
                     placeholder="Identificação (Casa, Trabalho...)"
@@ -295,18 +295,18 @@ export function Checkout() {
                   <button
                     onClick={handleSaveAddress}
                     disabled={!token}
-                    className="bg-black text-white px-4 py-2 text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+                    className="bg-black text-white px-3 md:px-4 py-2 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
                   >
                     Salvar endereço
                   </button>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center pt-2">
-                <button onClick={() => setStep('Autenticação')} className="text-sm underline">Voltar</button>
+              <div className="flex flex-col md:flex-row justify-between items-center pt-2 gap-3 md:gap-0">
+                <button onClick={() => setStep('Autenticação')} className="text-xs md:text-sm underline">Voltar</button>
                 <button
                   onClick={() => setStep('Pagamento')}
-                  className="bg-black text-white px-5 py-3 uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+                  className="w-full md:w-auto bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
                   disabled={!canContinueAddress}
                 >
                   Continuar
@@ -316,16 +316,16 @@ export function Checkout() {
           )}
 
           {step === 'Pagamento' && (
-            <section className="border p-6 space-y-6">
+            <section className="border p-4 md:p-6 space-y-6">
               <div className="flex items-center gap-3">
-                <CreditCard className="w-5 h-5" />
+                <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
                 <div>
-                  <h2 className="text-lg font-semibold">Pagamento</h2>
-                  <p className="text-sm text-gray-600">Escolha Pix ou Cartão.</p>
+                  <h2 className="text-base md:text-lg font-semibold">Pagamento</h2>
+                  <p className="text-xs md:text-sm text-gray-600">Escolha Pix ou Cartão.</p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <label className={`border p-4 cursor-pointer ${paymentMethod === 'pix' ? 'border-black bg-black/5' : 'border-gray-300'}`}>
                   <div className="flex items-center gap-2">
                     <Wallet className="w-4 h-4" />
@@ -370,11 +370,11 @@ export function Checkout() {
                 </div>
               )}
 
-              <div className="flex justify-between items-center pt-2">
-                <button onClick={() => setStep('Endereço')} className="text-sm underline">Voltar</button>
+              <div className="flex flex-col md:flex-row justify-between items-center pt-2 gap-3 md:gap-0">
+                <button onClick={() => setStep('Endereço')} className="text-xs md:text-sm underline">Voltar</button>
                 <button
                   onClick={handleFinish}
-                  className="bg-black text-white px-5 py-3 uppercase tracking-wide hover:bg-gray-900"
+                  className="w-full md:w-auto bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900"
                 >
                   Confirmar pagamento
                 </button>
@@ -383,12 +383,12 @@ export function Checkout() {
           )}
         </div>
 
-        <aside className="border p-6 space-y-4 lg:sticky lg:top-24 h-fit">
-          <h3 className="text-lg font-semibold">Resumo</h3>
+        <aside className="border p-4 md:p-6 space-y-4 lg:sticky lg:top-24 h-fit">
+          <h3 className="text-base md:text-lg font-semibold">Resumo</h3>
           <div className="divide-y">
             <div className="space-y-3 pb-3">
               {items.map((item) => (
-                <div key={`${item.id}-${item.size}`} className="flex justify-between text-sm">
+                <div key={`${item.id}-${item.size}`} className="flex justify-between text-xs md:text-sm">
                   <div>
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-gray-600">Tam. {item.size}</p>
@@ -397,7 +397,7 @@ export function Checkout() {
                 </div>
               ))}
             </div>
-            <div className="pt-3 space-y-2 text-sm">
+            <div className="pt-3 space-y-2 text-xs md:text-sm">
               <div className="flex justify-between"><span>Subtotal</span><span>R$ {subtotal.toFixed(2).replace('.', ',')}</span></div>
               <div className="flex justify-between"><span>Frete</span><span>R$ {shipping.toFixed(2).replace('.', ',')}</span></div>
               <div className="flex justify-between font-semibold text-lg pt-2"><span>Total</span><span>R$ {total.toFixed(2).replace('.', ',')}</span></div>

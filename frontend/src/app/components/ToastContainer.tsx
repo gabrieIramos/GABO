@@ -12,14 +12,14 @@ export function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-3 w-[320px] max-w-[90vw]">
+    <div className="fixed bottom-4 right-4 z-[9999] flex flex-col-reverse gap-3 w-[320px] max-w-[90vw]">
       <AnimatePresence>
         {toasts.map((toast) => (
           <motion.div
             key={toast.id}
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
             className={`border shadow-lg rounded-md p-4 pr-10 relative ${variantClasses[toast.variant || 'default']}`}
           >
