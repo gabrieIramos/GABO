@@ -6,7 +6,7 @@ import { useCartStore } from '../store/useCartStore';
 import { useToastStore } from '../store/useToastStore';
 import { Address, AddressPayload, fetchAddresses, createAddress } from '../services/checkoutApi';
 
-const steps = ['Autenticação', 'Endereço', 'Pagamento'] as const;
+const steps = ['Revisar Carrinho', 'Endereço', 'Pagamento'] as const;
 type Step = (typeof steps)[number];
 type PaymentMethod = 'pix' | 'card';
 
@@ -28,7 +28,7 @@ export function Checkout() {
   const { items, getTotalPrice } = useCartStore();
   const showToast = useToastStore((state) => state.showToast);
 
-  const [step, setStep] = useState<Step>('Autenticação');
+  const [step, setStep] = useState<Step>('Revisar Carrinho');
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [addressesLoading, setAddressesLoading] = useState(false);
   const [addressForm, setAddressForm] = useState<AddressPayload>(emptyAddress);
@@ -42,7 +42,11 @@ export function Checkout() {
     if (items.length === 0) {
       navigate('/cart');
     }
-  }, [items.length, navigate]);
+    // If not authenticated, send to auth page with redirect back to checkout
+    if (!isAuthenticated) {
+      navigate(`/auth?redirect=/checkout`);
+    }
+  }, [items.length, navigate, isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticated && step === 'Endereço' && token) {
@@ -66,7 +70,6 @@ export function Checkout() {
     }
   }
 
-  const canContinueAuth = isAuthenticated;
   const canContinueAddress = Boolean(selectedAddressId || addressForm.recipient);
 
   const paymentSummary = useMemo(
@@ -74,15 +77,7 @@ export function Checkout() {
     [paymentMethod],
   );
 
-  function handleProceedFromAuth() {
-    if (!isAuthenticated) {
-      showToast({
-        title: 'Faça login para continuar',
-        description: 'Entre ou cadastre-se para finalizar sua compra.',
-        variant: 'error',
-      });
-      return;
-    }
+  function handleProceedFromCart() {
     setStep('Endereço');
   }
 
@@ -143,46 +138,54 @@ export function Checkout() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 md:gap-8">
         <div className="space-y-6">
-          {step === 'Autenticação' && (
+          {step === 'Revisar Carrinho' && (
             <section className="border p-4 md:p-6 space-y-4">
               <div className="flex items-center gap-3">
-                <LogIn className="w-4 h-4 md:w-5 md:h-5" />
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
                 <div>
-                  <h2 className="text-base md:text-lg font-semibold">Entrar ou cadastrar</h2>
-                  <p className="text-xs md:text-sm text-gray-600">Precisamos confirmar sua conta para continuar.</p>
+                  <h2 className="text-base md:text-lg font-semibold">Revisar Carrinho</h2>
+                  <p className="text-xs md:text-sm text-gray-600">Confira os itens antes de prosseguir.</p>
                 </div>
               </div>
 
-              {isAuthenticated ? (
-                <div className="flex items-center gap-3 text-sm text-green-700 bg-green-50 border border-green-200 px-4 py-3 rounded">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Você está logado{user?.name ? ` como ${user.name}` : ''}.</span>
-                </div>
-              ) : (
-                <div className="space-y-5 text-sm">
-                  <p>Não encontramos sessão ativa. Faça login ou crie uma conta.</p>
-                  <div className="flex flex-wrap gap-3">
-                    <a
-                      href="/profile"
-                      className="bg-black text-white px-4 py-2 text-sm uppercase tracking-wide hover:bg-gray-900"
-                    >
-                      Fazer login / cadastrar
-                    </a>
-                    <a
-                      href="/"
-                      className="underline px-4 py-2 text-gray-700 hover:text-black"
-                    >
-                      Voltar às compras
-                    </a>
+              <div className="divide-y">
+                {items.map((item) => (
+                  <div key={`${item.id}-${item.size}`} className="py-4 first:pt-0 last:pb-0">
+                    <div className="flex gap-4">
+                      {item.images?.[0] && (
+                        <img
+                          src={item.images[0]}
+                          alt={item.name}
+                          className="w-20 h-20 object-cover border"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-sm md:text-base">{item.name}</h3>
+                        <p className="text-xs md:text-sm text-gray-600">Tamanho: {item.size}</p>
+                        <p className="text-xs md:text-sm text-gray-600">Quantidade: {item.quantity}</p>
+                        <p className="text-sm md:text-base font-semibold mt-1">
+                          R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )}
+                ))}
+              </div>
 
-              <div className="flex justify-end">
+              <div className="pt-4 border-t space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Subtotal ({items.length} {items.length === 1 ? 'item' : 'itens'})</span>
+                  <span className="font-semibold">R$ {subtotal.toFixed(2).replace('.', ',')}</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center pt-2">
+                <Link to="/cart" className="text-xs md:text-sm underline">
+                  Voltar ao carrinho
+                </Link>
                 <button
-                  onClick={handleProceedFromAuth}
-                  className="bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
-                  disabled={!canContinueAuth}
+                  onClick={handleProceedFromCart}
+                  className="bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900"
                 >
                   Continuar
                 </button>
@@ -303,7 +306,7 @@ export function Checkout() {
               </div>
 
               <div className="flex flex-col md:flex-row justify-between items-center pt-2 gap-3 md:gap-0">
-                <button onClick={() => setStep('Autenticação')} className="text-xs md:text-sm underline">Voltar</button>
+                <button onClick={() => setStep('Revisar Carrinho')} className="text-xs md:text-sm underline">Voltar</button>
                 <button
                   onClick={() => setStep('Pagamento')}
                   className="w-full md:w-auto bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"

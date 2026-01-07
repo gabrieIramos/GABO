@@ -187,7 +187,9 @@ export class ProductsService {
     currentImages?: string[],
   ): Promise<string[]> {
     if (files?.length) {
-      return await this.cloudinaryService.uploadMany(files);
+      const uploaded = await this.cloudinaryService.uploadMany(files);
+      const base = dtoImages?.length ? dtoImages : currentImages?.length ? currentImages : [];
+      return [...base, ...uploaded];
     }
 
     if (dtoImages?.length) {

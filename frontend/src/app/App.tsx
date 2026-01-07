@@ -10,8 +10,10 @@ import { Profile } from './pages/Profile';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { About } from './pages/About';
+import { Auth } from './pages/Auth';
 import { ToastContainer } from './components/ToastContainer';
 import { Checkout } from './pages/Checkout';
+
 
 export default function App() {
   return (
@@ -25,6 +27,7 @@ export default function App() {
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

@@ -41,7 +41,7 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
-  @UseInterceptors(FilesInterceptor('images', 5, { storage: memoryStorage() }))
+  @UseInterceptors(FilesInterceptor('images', 10, { storage: memoryStorage() }))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Dados do produto e imagens (enviar em multipart/form-data)',
@@ -117,7 +117,7 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
-  @UseInterceptors(FilesInterceptor('images', 5, { storage: memoryStorage() }))
+  @UseInterceptors(FilesInterceptor('images', 10, { storage: memoryStorage() }))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Atualizar dados do produto e substituir imagens (multipart/form-data)',

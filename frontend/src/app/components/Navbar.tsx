@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useState } from 'react';
+import { useAuthStore } from '../store/useAuthStore';
 
 export function Navbar() {
   const location = useLocation();
@@ -9,6 +10,7 @@ export function Navbar() {
   const totalItems = getTotalItems();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   const categories = [
     { name: 'Lançamentos', path: '/products?isNew=true' },
@@ -60,7 +62,7 @@ export function Navbar() {
               <Search className="w-5 h-5" />
             </button>
             <Link
-              to="/profile"
+              to={isAuthenticated ? "/profile" : "/auth"}
               className="hidden sm:block hover:opacity-60 transition-opacity"
               aria-label="Perfil"
             >
@@ -116,7 +118,7 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              to="/profile"
+              to={isAuthenticated ? "/profile" : "/auth"}
               onClick={() => setIsMobileMenuOpen(false)}
               className="block px-4 py-2 text-sm uppercase tracking-wider text-gray-600 hover:text-black hover:bg-[#F5F5F5] rounded transition-colors sm:hidden"
             >

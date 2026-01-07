@@ -6,6 +6,7 @@ import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
 import { AuthModule } from './auth/auth.module';
+import { AddressesModule } from './addresses/addresses.module';
 import { SeedService } from './seed.service';
 import { Product } from './products/entities/product.entity';
 
@@ -25,6 +26,7 @@ import { Product } from './products/entities/product.entity';
     UsersModule,
     ProductsModule,
     OrdersModule,
+    AddressesModule,
   ],
   providers: [SeedService],
 })

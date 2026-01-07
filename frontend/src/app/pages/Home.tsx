@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HeroSlider } from '../components/HeroSlider';
+import { Reveal } from '../components/Reveal';
 import { ProductCard } from '../components/ProductCard';
 import { fetchProducts, Product } from '../services/productsApi';
 import { useToastStore } from '../store/useToastStore';
@@ -37,10 +38,14 @@ export function Home() {
 
       <section className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 py-8 md:py-16">
         <div className="flex items-center justify-between mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl tracking-tighter">Destaques</h2>
-          <Link to="/products" className="text-xs md:text-sm uppercase tracking-wider underline hover:text-gray-600">
-            Ver todos
-          </Link>
+          <Reveal>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl tracking-tighter">Destaques</h2>
+          </Reveal>
+          <Reveal delay={100} direction="right">
+            <Link to="/products" className="text-xs md:text-sm uppercase tracking-wider underline hover:text-gray-600">
+              Ver todos
+            </Link>
+          </Reveal>
         </div>
 
         {loading ? (
@@ -51,8 +56,10 @@ export function Home() {
           <p className="text-center text-gray-600 py-16">Nenhum produto encontrado.</p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {products.map((product, idx) => (
+              <Reveal key={product.id} delay={idx * 120}>
+                <ProductCard product={product} />
+              </Reveal>
             ))}
           </div>
         )}
@@ -61,12 +68,16 @@ export function Home() {
       {/* Banner Secondary */}
       <section className="bg-black text-white py-12 md:py-16 lg:py-24">
         <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 text-center">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter mb-3 md:mb-4">
-            Excelência em Cada Fio
-          </h2>
-          <p className="text-sm md:text-base lg:text-lg text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">
-            A mesma tecnologia. O mesmo detalhe. A mesma paixão. Experimente o nível máximo de fidelidade em camisas esportivas importadas.
-          </p>
+          <Reveal>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter mb-3 md:mb-4">
+              Excelência em Cada Fio
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="text-sm md:text-base lg:text-lg text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">
+              A mesma tecnologia. O mesmo detalhe. A mesma paixão. Experimente o nível máximo de fidelidade em camisas esportivas importadas.
+            </p>
+          </Reveal>
         </div>
       </section>
     </div>

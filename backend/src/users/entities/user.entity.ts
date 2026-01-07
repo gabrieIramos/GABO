@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Exclude } from 'class-transformer';
 import { Order } from '../../orders/entities/order.entity';
 import { UserRole } from '../../auth/enums/role.enum';
+import { Address } from '../../addresses/entities/address.entity';
 
 @Entity('users')
 export class User {
@@ -38,6 +39,9 @@ export class User {
 
   @OneToMany(() => Order, order => order.user)
   orders: Order[];
+
+  @OneToMany(() => Address, address => address.user)
+  addresses: Address[];
 
   @CreateDateColumn()
   createdAt: Date;
