@@ -39,19 +39,21 @@ export function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
+      <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-lime-400" />
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-16 text-center">
-        <p className="text-xl">Produto não encontrado</p>
-        <Link to="/" className="underline mt-4 inline-block">
-          Voltar para Home
-        </Link>
+      <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-white mb-4">Produto não encontrado</p>
+          <Link to="/" className="text-lime-400 hover:text-lime-300 uppercase tracking-wider">
+            Voltar para Home
+          </Link>
+        </div>
       </div>
     );
   }
@@ -77,32 +79,35 @@ export function ProductDetail() {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-2 mb-8 hover:underline"
-      >
-        <ChevronLeft className="w-4 h-4" />
-        Voltar
-      </Link>
+    <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-8">
+        <Link
+          to="/products"
+          className="inline-flex items-center gap-2 mb-6 sm:mb-8 text-lime-400 hover:text-lime-300 uppercase text-xs sm:text-sm tracking-wider font-bold transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Voltar
+        </Link>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Images */}
-        <div className="space-y-4">
-          <div className="aspect-square bg-[#F5F5F5] overflow-hidden">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="relative aspect-square bg-black overflow-hidden">
+            {/* Radial gradient background highlight */}
+            <div className="absolute inset-0 bg-radial-gradient from-zinc-800/50 via-transparent to-transparent opacity-40"></div>
             <img
               src={product.images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="relative z-10 w-full h-full object-cover"
             />
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4">
             {product.images.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`aspect-square bg-[#F5F5F5] overflow-hidden ${
-                  selectedImage === index ? 'ring-2 ring-black' : ''
+                className={`aspect-square bg-zinc-900 border-2 overflow-hidden transition-all duration-300 ${
+                  selectedImage === index ? 'border-lime-400' : 'border-zinc-800 hover:border-zinc-600'
                 }`}
               >
                 <img
@@ -116,39 +121,39 @@ export function ProductDetail() {
         </div>
 
         {/* Info */}
-        <div className="lg:sticky lg:top-24 lg:self-start space-y-6">
+        <div className="lg:sticky lg:top-24 lg:self-start space-y-4 sm:space-y-6">
           <div>
-            <p className="text-sm text-gray-600 uppercase tracking-wider mb-2">
+            <p className="text-xs sm:text-sm text-zinc-500 uppercase tracking-[0.2em] mb-2 font-bold">
               {product.team}
             </p>
-            <h1 className="text-3xl md:text-4xl tracking-tight mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-white tracking-tighter mb-3 sm:mb-4">
               {product.name}
             </h1>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 ${
+                    className={`w-3 h-3 sm:w-4 sm:h-4 ${
                       i < Math.floor(product.rating)
-                        ? 'fill-black'
-                        : 'fill-gray-300'
+                        ? 'fill-lime-400 text-lime-400'
+                        : 'fill-zinc-700 text-zinc-700'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-sm text-gray-600">
+              <span className="text-xs sm:text-sm text-zinc-400">
                 {product.rating} ({product.reviews?.length || 0} avaliações)
               </span>
             </div>
-            <div className="flex items-baseline gap-3 text-2xl">
-              <span className="text-gray-400 line-through text-lg">
+            <div className="flex items-baseline gap-2 sm:gap-3 text-xl sm:text-2xl">
+              <span className="text-zinc-500 line-through text-base sm:text-lg">
                 R$ {originalPrice.toFixed(2).replace('.', ',')}
               </span>
-              <span className="font-semibold">
+              <span className="font-black text-lime-400">
                 R$ {product.price.toFixed(2).replace('.', ',')}
               </span>
-              <span className="text-sm bg-black text-white px-3 py-1 uppercase tracking-wide">
+              <span className="text-xs sm:text-sm bg-lime-400 text-black px-2 sm:px-3 py-1 uppercase tracking-wide font-black -skew-x-6">
                 -{discountPercent}%
               </span>
             </div>
@@ -156,21 +161,21 @@ export function ProductDetail() {
 
           {/* Size Selector */}
           <div>
-            <label className="block uppercase tracking-wider text-sm mb-3">
+            <label className="block uppercase tracking-[0.2em] text-xs sm:text-sm mb-2 sm:mb-3 font-bold text-zinc-400">
               Selecione o Tamanho
             </label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3">
               {product.sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`py-4 border-2 transition-colors ${
+                  className={`py-3 sm:py-4 border-2 transition-all duration-300 font-black uppercase -skew-x-6 text-sm sm:text-base ${
                     selectedSize === size
-                      ? 'border-black bg-black text-white'
-                      : 'border-gray-300 hover:border-black'
+                      ? 'border-lime-400 bg-lime-400 text-black shadow-[0_0_20px_rgba(168,255,0,0.3)]'
+                      : 'border-zinc-700 text-white hover:border-lime-400'
                   }`}
                 >
-                  {size}
+                  <span className="skew-x-6 inline-block">{size}</span>
                 </button>
               ))}
             </div>
@@ -179,30 +184,30 @@ export function ProductDetail() {
           {/* Add to Cart */}
           <button
             onClick={handleAddToCart}
-            className="w-full bg-black text-white py-4 uppercase tracking-wider hover:bg-gray-900 transition-colors"
+            className="w-full bg-lime-400 text-black py-4 sm:py-5 text-sm sm:text-base uppercase tracking-wider font-black hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] transition-all duration-300 hover:scale-[1.02]"
           >
             Adicionar ao Carrinho
           </button>
 
           {/* Description */}
-          <div className="border-t pt-6">
-            <h3 className="uppercase tracking-wider text-sm mb-3">Descrição</h3>
-            <p className="text-gray-700">{product.description}</p>
+          <div className="border-t border-zinc-800 pt-4 sm:pt-6">
+            <h3 className="uppercase tracking-[0.2em] text-xs sm:text-sm mb-2 sm:mb-3 font-bold text-zinc-400">Descrição</h3>
+            <p className="text-sm sm:text-base text-zinc-300">{product.description}</p>
           </div>
         </div>
       </div>
 
       {/* Reviews */}
       {product.reviews && product.reviews.length > 0 && (
-        <section className="mt-16 border-t pt-16">
-          <h2 className="text-2xl tracking-tight mb-8">Avaliações</h2>
+        <section className="mt-12 sm:mt-16 border-t border-zinc-800 pt-12 sm:pt-16">
+          <h2 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tighter mb-6 sm:mb-8">Avaliações</h2>
           <div className="space-y-6 max-w-3xl">
             {product.reviews.map((review: any) => (
               <motion.div
                 key={review.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="border-b pb-6"
+                className="border-b border-zinc-800 pb-6"
               >
                 <div className="flex items-center gap-4 mb-2">
                   <div className="flex">
@@ -210,22 +215,23 @@ export function ProductDetail() {
                       <Star
                         key={i}
                         className={`w-4 h-4 ${
-                          i < review.rating ? 'fill-black' : 'fill-gray-300'
+                          i < review.rating ? 'fill-lime-400 text-lime-400' : 'fill-zinc-700 text-zinc-700'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm">{review.author}</span>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-white font-bold">{review.author}</span>
+                  <span className="text-sm text-zinc-500">
                     {new Date(review.date).toLocaleDateString('pt-BR')}
                   </span>
                 </div>
-                <p className="text-gray-700">{review.comment}</p>
+                <p className="text-zinc-300">{review.comment}</p>
               </motion.div>
             ))}
           </div>
         </section>
       )}
+      </div>
     </div>
   );
 }

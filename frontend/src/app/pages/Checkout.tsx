@@ -109,61 +109,62 @@ export function Checkout() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 py-6 md:py-10 space-y-8 md:space-y-10">
-      <header className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wider">Checkout</p>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl tracking-tight">Finalize sua compra</h1>
-        </div>
-        <div className="flex gap-1 md:gap-2 text-xs md:text-sm">
-          {steps.map((s, idx) => {
-            const completed = steps.indexOf(step) > idx;
-            const active = step === s;
-            return (
-              <div key={s} className="flex items-center gap-2">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold border ${
-                    active ? 'bg-black text-white border-black' : completed ? 'bg-green-100 text-green-800 border-green-200' : 'bg-white text-gray-600 border-gray-300'
-                  }`}
-                >
-                  {completed ? <CheckCircle2 className="w-4 h-4" /> : idx + 1}
+    <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-12 py-6 md:py-10 space-y-8 md:space-y-10">
+        <header className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <p className="text-xs md:text-sm text-lime-400 uppercase tracking-[0.2em]">Checkout</p>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-tighter">Finalize sua compra</h1>
+          </div>
+          <div className="flex gap-1 md:gap-2 text-xs md:text-sm">
+            {steps.map((s, idx) => {
+              const completed = steps.indexOf(step) > idx;
+              const active = step === s;
+              return (
+                <div key={s} className="flex items-center gap-2">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black border ${
+                      active ? 'bg-lime-400 text-black border-lime-400 shadow-[0_0_20px_rgba(168,255,0,0.4)]' : completed ? 'bg-lime-950 text-lime-400 border-lime-700' : 'bg-zinc-900 text-zinc-600 border-zinc-800'
+                    }`}
+                  >
+                    {completed ? <CheckCircle2 className="w-4 h-4" /> : idx + 1}
+                  </div>
+                  <span className={active ? 'font-bold text-white' : 'text-zinc-500'}>{s}</span>
+                  {idx < steps.length - 1 && <span className="text-zinc-700">/</span>}
                 </div>
-                <span className={active ? 'font-semibold' : 'text-gray-600'}>{s}</span>
-                {idx < steps.length - 1 && <span className="text-gray-300">/</span>}
-              </div>
-            );
-          })}
-        </div>
-      </header>
+              );
+            })}
+          </div>
+        </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 md:gap-8">
         <div className="space-y-6">
           {step === 'Revisar Carrinho' && (
-            <section className="border p-4 md:p-6 space-y-4">
+            <section className="bg-zinc-900 border border-zinc-800 p-4 md:p-6 space-y-4">
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-lime-400" />
                 <div>
-                  <h2 className="text-base md:text-lg font-semibold">Revisar Carrinho</h2>
-                  <p className="text-xs md:text-sm text-gray-600">Confira os itens antes de prosseguir.</p>
+                  <h2 className="text-base md:text-lg font-black text-white uppercase tracking-wide">Revisar Carrinho</h2>
+                  <p className="text-xs md:text-sm text-zinc-400">Confira os itens antes de prosseguir.</p>
                 </div>
               </div>
 
-              <div className="divide-y">
+              <div className="divide-y divide-zinc-800">
                 {items.map((item) => (
                   <div key={`${item.id}-${item.size}`} className="py-4 first:pt-0 last:pb-0">
                     <div className="flex gap-4">
-                      {item.images?.[0] && (
+                      {item.image && (
                         <img
-                          src={item.images[0]}
+                          src={item.image}
                           alt={item.name}
-                          className="w-20 h-20 object-cover border"
+                          className="w-20 h-20 object-cover border border-zinc-800 bg-zinc-950"
                         />
                       )}
                       <div className="flex-1">
-                        <h3 className="font-semibold text-sm md:text-base">{item.name}</h3>
-                        <p className="text-xs md:text-sm text-gray-600">Tamanho: {item.size}</p>
-                        <p className="text-xs md:text-sm text-gray-600">Quantidade: {item.quantity}</p>
-                        <p className="text-sm md:text-base font-semibold mt-1">
+                        <h3 className="font-bold text-sm md:text-base text-white">{item.name}</h3>
+                        <p className="text-xs md:text-sm text-zinc-500">Tamanho: {item.size}</p>
+                        <p className="text-xs md:text-sm text-zinc-500">Quantidade: {item.quantity}</p>
+                        <p className="text-sm md:text-base font-black mt-1 text-lime-400">
                           R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}
                         </p>
                       </div>
@@ -172,20 +173,20 @@ export function Checkout() {
                 ))}
               </div>
 
-              <div className="pt-4 border-t space-y-2 text-sm">
-                <div className="flex justify-between">
+              <div className="pt-4 border-t border-zinc-800 space-y-2 text-sm">
+                <div className="flex justify-between text-zinc-400">
                   <span>Subtotal ({items.length} {items.length === 1 ? 'item' : 'itens'})</span>
-                  <span className="font-semibold">R$ {subtotal.toFixed(2).replace('.', ',')}</span>
+                  <span className="font-bold text-white">R$ {subtotal.toFixed(2).replace('.', ',')}</span>
                 </div>
               </div>
 
               <div className="flex justify-between items-center pt-2">
-                <Link to="/cart" className="text-xs md:text-sm underline">
+                <Link to="/cart" className="text-xs md:text-sm text-lime-400 hover:text-lime-300 uppercase tracking-wider">
                   Voltar ao carrinho
                 </Link>
                 <button
                   onClick={handleProceedFromCart}
-                  className="bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900"
+                  className="bg-lime-400 text-black px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm font-black uppercase tracking-wider hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] transition-all duration-300"
                 >
                   Continuar
                 </button>
@@ -194,17 +195,17 @@ export function Checkout() {
           )}
 
           {step === 'Endereço' && (
-            <section className="border p-4 md:p-6 space-y-6">
+            <section className="bg-zinc-900 border border-zinc-800 p-4 md:p-6 space-y-6">
               <div className="flex items-center gap-3">
-                <Home className="w-4 h-4 md:w-5 md:h-5" />
+                <Home className="w-4 h-4 md:w-5 md:h-5 text-lime-400" />
                 <div>
-                  <h2 className="text-base md:text-lg font-semibold">Endereço de entrega</h2>
-                  <p className="text-xs md:text-sm text-gray-600">Escolha um endereço salvo ou cadastre um novo.</p>
+                  <h2 className="text-base md:text-lg font-black text-white uppercase tracking-wide">Endereço de entrega</h2>
+                  <p className="text-xs md:text-sm text-zinc-400">Escolha um endereço salvo ou cadastre um novo.</p>
                 </div>
               </div>
 
               {addressesLoading ? (
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-lime-400">
                   <Loader2 className="w-4 h-4 animate-spin" /> Carregando endereços...
                 </div>
               ) : (
@@ -213,22 +214,23 @@ export function Checkout() {
                     <label
                       key={addr.id}
                       className={`border p-4 cursor-pointer transition ${
-                        selectedAddressId === addr.id ? 'border-black bg-black/5' : 'border-gray-300'
+                        selectedAddressId === addr.id ? 'border-lime-400 bg-lime-950/20' : 'border-zinc-800 bg-zinc-900/50'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div className="space-y-1 text-sm">
-                          <p className="font-semibold">{addr.label || addr.recipient}</p>
-                          <p className="text-gray-700">{addr.recipient}</p>
-                          <p className="text-gray-700">{`${addr.street}, ${addr.number}${addr.complement ? ` - ${addr.complement}` : ''}`}</p>
-                          <p className="text-gray-700">{`${addr.district}, ${addr.city} - ${addr.state}`}</p>
-                          <p className="text-gray-500">CEP {addr.zip}</p>
+                          <p className="font-bold text-white">{addr.label || addr.recipient}</p>
+                          <p className="text-zinc-400">{addr.recipient}</p>
+                          <p className="text-zinc-400">{`${addr.street}, ${addr.number}${addr.complement ? ` - ${addr.complement}` : ''}`}</p>
+                          <p className="text-zinc-400">{`${addr.district}, ${addr.city} - ${addr.state}`}</p>
+                          <p className="text-zinc-500">CEP {addr.zip}</p>
                         </div>
                         <input
                           type="radio"
                           name="address"
                           checked={selectedAddressId === addr.id}
                           onChange={() => setSelectedAddressId(addr.id)}
+                          className="accent-lime-400"
                         />
                       </div>
                     </label>
@@ -236,59 +238,59 @@ export function Checkout() {
                 </div>
               )}
 
-              <div className="border-t pt-4 space-y-3">
-                <h3 className="font-semibold text-xs md:text-sm uppercase tracking-wide">Cadastrar novo endereço</h3>
+              <div className="border-t border-zinc-800 pt-4 space-y-3">
+                <h3 className="font-black text-xs md:text-sm text-white uppercase tracking-[0.2em]">Cadastrar novo endereço</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Identificação (Casa, Trabalho...)"
                     value={addressForm.label}
                     onChange={(e) => setAddressForm({ ...addressForm, label: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Destinatário"
                     value={addressForm.recipient}
                     onChange={(e) => setAddressForm({ ...addressForm, recipient: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Rua"
                     value={addressForm.street}
                     onChange={(e) => setAddressForm({ ...addressForm, street: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Número"
                     value={addressForm.number}
                     onChange={(e) => setAddressForm({ ...addressForm, number: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Complemento"
                     value={addressForm.complement}
                     onChange={(e) => setAddressForm({ ...addressForm, complement: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Bairro"
                     value={addressForm.district}
                     onChange={(e) => setAddressForm({ ...addressForm, district: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Cidade"
                     value={addressForm.city}
                     onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="Estado"
                     value={addressForm.state}
                     onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })}
                   />
                   <input
-                    className="border px-3 py-2"
+                    className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
                     placeholder="CEP"
                     value={addressForm.zip}
                     onChange={(e) => setAddressForm({ ...addressForm, zip: e.target.value })}
@@ -298,7 +300,7 @@ export function Checkout() {
                   <button
                     onClick={handleSaveAddress}
                     disabled={!token}
-                    className="bg-black text-white px-3 md:px-4 py-2 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+                    className="bg-lime-400 text-black px-3 md:px-4 py-2 text-xs md:text-sm font-black uppercase tracking-wider hover:shadow-[0_0_20px_rgba(168,255,0,0.5)] transition-all duration-300 disabled:opacity-50 disabled:hover:shadow-none"
                   >
                     Salvar endereço
                   </button>
@@ -306,10 +308,10 @@ export function Checkout() {
               </div>
 
               <div className="flex flex-col md:flex-row justify-between items-center pt-2 gap-3 md:gap-0">
-                <button onClick={() => setStep('Revisar Carrinho')} className="text-xs md:text-sm underline">Voltar</button>
+                <button onClick={() => setStep('Revisar Carrinho')} className="text-xs md:text-sm text-lime-400 hover:text-lime-300 uppercase tracking-wider">Voltar</button>
                 <button
                   onClick={() => setStep('Pagamento')}
-                  className="w-full md:w-auto bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+                  className="w-full md:w-auto bg-lime-400 text-black px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm font-black uppercase tracking-wider hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] transition-all duration-300 disabled:opacity-50 disabled:hover:shadow-none"
                   disabled={!canContinueAddress}
                 >
                   Continuar
@@ -319,65 +321,65 @@ export function Checkout() {
           )}
 
           {step === 'Pagamento' && (
-            <section className="border p-4 md:p-6 space-y-6">
+            <section className="bg-zinc-900 border border-zinc-800 p-4 md:p-6 space-y-6">
               <div className="flex items-center gap-3">
-                <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
+                <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-lime-400" />
                 <div>
-                  <h2 className="text-base md:text-lg font-semibold">Pagamento</h2>
-                  <p className="text-xs md:text-sm text-gray-600">Escolha Pix ou Cartão.</p>
+                  <h2 className="text-base md:text-lg font-black text-white uppercase tracking-wide">Pagamento</h2>
+                  <p className="text-xs md:text-sm text-zinc-400">Escolha Pix ou Cartão.</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                <label className={`border p-4 cursor-pointer ${paymentMethod === 'pix' ? 'border-black bg-black/5' : 'border-gray-300'}`}>
+                <label className={`border p-4 cursor-pointer transition ${paymentMethod === 'pix' ? 'border-lime-400 bg-lime-950/20' : 'border-zinc-800 bg-zinc-900/50'}`}>
                   <div className="flex items-center gap-2">
-                    <Wallet className="w-4 h-4" />
-                    <span className="font-semibold">Pix</span>
+                    <Wallet className="w-4 h-4 text-lime-400" />
+                    <span className="font-bold text-white">Pix</span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">Pagamento instantâneo com QR Code.</p>
+                  <p className="text-sm text-zinc-400 mt-1">Pagamento instantâneo com QR Code.</p>
                   <input
                     type="radio"
                     name="payment"
                     checked={paymentMethod === 'pix'}
                     onChange={() => setPaymentMethod('pix')}
-                    className="mt-3"
+                    className="mt-3 accent-lime-400"
                   />
                 </label>
 
-                <label className={`border p-4 cursor-pointer ${paymentMethod === 'card' ? 'border-black bg-black/5' : 'border-gray-300'}`}>
+                <label className={`border p-4 cursor-pointer transition ${paymentMethod === 'card' ? 'border-lime-400 bg-lime-950/20' : 'border-zinc-800 bg-zinc-900/50'}`}>
                   <div className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4" />
-                    <span className="font-semibold">Cartão</span>
+                    <CreditCard className="w-4 h-4 text-lime-400" />
+                    <span className="font-bold text-white">Cartão</span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">Pague com crédito.</p>
+                  <p className="text-sm text-zinc-400 mt-1">Pague com crédito.</p>
                   <input
                     type="radio"
                     name="payment"
                     checked={paymentMethod === 'card'}
                     onChange={() => setPaymentMethod('card')}
-                    className="mt-3"
+                    className="mt-3 accent-lime-400"
                   />
                 </label>
               </div>
 
               {paymentMethod === 'pix' ? (
-                <div className="text-sm text-gray-700 bg-gray-50 border border-dashed border-gray-300 p-4">
+                <div className="text-sm text-zinc-400 bg-zinc-950 border border-dashed border-zinc-700 p-4">
                   Gere o QR Code após confirmar. O pedido é aprovado na hora após o pagamento.
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
-                  <input className="border px-3 py-2" placeholder="Número do cartão" />
-                  <input className="border px-3 py-2" placeholder="Nome impresso" />
-                  <input className="border px-3 py-2" placeholder="Validade (MM/AA)" />
-                  <input className="border px-3 py-2" placeholder="CVV" />
+                  <input className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600" placeholder="Número do cartão" />
+                  <input className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600" placeholder="Nome impresso" />
+                  <input className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600" placeholder="Validade (MM/AA)" />
+                  <input className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600" placeholder="CVV" />
                 </div>
               )}
 
               <div className="flex flex-col md:flex-row justify-between items-center pt-2 gap-3 md:gap-0">
-                <button onClick={() => setStep('Endereço')} className="text-xs md:text-sm underline">Voltar</button>
+                <button onClick={() => setStep('Endereço')} className="text-xs md:text-sm text-lime-400 hover:text-lime-300 uppercase tracking-wider">Voltar</button>
                 <button
                   onClick={handleFinish}
-                  className="w-full md:w-auto bg-black text-white px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm uppercase tracking-wide hover:bg-gray-900"
+                  className="w-full md:w-auto bg-lime-400 text-black px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm font-black uppercase tracking-wider hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] transition-all duration-300"
                 >
                   Confirmar pagamento
                 </button>
@@ -386,27 +388,28 @@ export function Checkout() {
           )}
         </div>
 
-        <aside className="border p-4 md:p-6 space-y-4 lg:sticky lg:top-24 h-fit">
-          <h3 className="text-base md:text-lg font-semibold">Resumo</h3>
-          <div className="divide-y">
+        <aside className="bg-zinc-900 border border-zinc-800 p-4 md:p-6 space-y-4 lg:sticky lg:top-24 h-fit">
+          <h3 className="text-base md:text-lg font-black text-white uppercase tracking-wide">Resumo</h3>
+          <div className="divide-y divide-zinc-800">
             <div className="space-y-3 pb-3">
               {items.map((item) => (
                 <div key={`${item.id}-${item.size}`} className="flex justify-between text-xs md:text-sm">
                   <div>
-                    <p className="font-semibold">{item.name}</p>
-                    <p className="text-gray-600">Tam. {item.size}</p>
+                    <p className="font-bold text-white">{item.name}</p>
+                    <p className="text-zinc-500">Tam. {item.size}</p>
                   </div>
-                  <p>R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
+                  <p className="text-white">R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
                 </div>
               ))}
             </div>
             <div className="pt-3 space-y-2 text-xs md:text-sm">
-              <div className="flex justify-between"><span>Subtotal</span><span>R$ {subtotal.toFixed(2).replace('.', ',')}</span></div>
-              <div className="flex justify-between"><span>Frete</span><span>R$ {shipping.toFixed(2).replace('.', ',')}</span></div>
-              <div className="flex justify-between font-semibold text-lg pt-2"><span>Total</span><span>R$ {total.toFixed(2).replace('.', ',')}</span></div>
+              <div className="flex justify-between text-zinc-400"><span>Subtotal</span><span>R$ {subtotal.toFixed(2).replace('.', ',')}</span></div>
+              <div className="flex justify-between text-zinc-400"><span>Frete</span><span>R$ {shipping.toFixed(2).replace('.', ',')}</span></div>
+              <div className="flex justify-between font-black text-lg pt-2"><span className="text-white">Total</span><span className="text-lime-400">R$ {total.toFixed(2).replace('.', ',')}</span></div>
             </div>
           </div>
         </aside>
+      </div>
       </div>
     </div>
   );

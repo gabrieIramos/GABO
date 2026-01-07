@@ -81,20 +81,21 @@ export function AllProducts() {
     search || selectedCategory || selectedSize || selectedPriceRange.min || selectedPriceRange.max || isNew;
 
   return (
-    <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 py-6 md:py-8">
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl md:text-4xl tracking-tight">Todos os Produtos</h1>
-        <Link to="/" className="text-xs md:text-sm underline text-gray-600 hover:text-black">
-          Voltar
-        </Link>
-      </div>
+    <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 py-6 md:py-8">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-2xl md:text-4xl font-black uppercase text-white tracking-tighter">Todos os Produtos</h1>
+          <Link to="/" className="text-xs md:text-sm uppercase tracking-widest text-lime-400 hover:text-lime-300 transition-colors">
+            Voltar
+          </Link>
+        </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
         {/* Mobile Filter Button */}
         <div className="lg:hidden mb-4">
           <button
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-            className="w-full border px-4 py-3 text-sm uppercase tracking-wider font-semibold flex items-center justify-between hover:bg-[#F5F5F5] transition-colors"
+            className="w-full border border-zinc-800 bg-zinc-900 text-white px-4 py-3 text-sm uppercase tracking-wider font-bold flex items-center justify-between hover:border-lime-400 transition-colors"
           >
             Filtros
             <svg
@@ -110,14 +111,13 @@ export function AllProducts() {
 
         {/* Sidebar Filters - Desktop always visible, Mobile conditional */}
         <aside
-          className={`lg:col-span-1 space-y-6 ${
-            isFiltersOpen ? 'block' : 'hidden'
-          } lg:block border-t lg:border-t-0 pt-6 lg:pt-0`}
+          className={`lg:col-span-1 space-y-6 ${            isFiltersOpen ? 'block' : 'hidden'
+          } lg:block border-t border-zinc-800 lg:border-t-0 pt-6 lg:pt-0 bg-zinc-900 lg:bg-transparent p-4 lg:p-0 rounded`}
         >
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-lg uppercase tracking-wide">Filtros</h2>
+            <h2 className="font-black text-lg uppercase tracking-widest text-white">Filtros</h2>
             {hasActiveFilters && (
-              <button onClick={resetFilters} className="text-xs underline text-gray-600 hover:text-black">
+              <button onClick={resetFilters} className="text-xs uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors">
                 Limpar
               </button>
             )}
@@ -125,27 +125,28 @@ export function AllProducts() {
 
           {/* Search */}
           <div className="space-y-2">
-            <label className="text-xs md:text-sm uppercase tracking-wider font-semibold">Buscar</label>
+            <label className="text-xs md:text-sm uppercase tracking-wider font-bold text-zinc-400">Buscar</label>
             <input
               type="text"
               placeholder="Nome ou descrição..."
               value={search}
               onChange={(e) => updateFilterParam('search', e.target.value || null)}
-              className="w-full border px-3 py-2 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-black"
+              className="w-full bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-600 px-3 py-2 text-xs md:text-sm focus:outline-none focus:border-lime-400 transition-colors"
             />
           </div>
 
           {/* Category */}
           <div className="space-y-3">
-            <label className="text-xs md:text-sm uppercase tracking-wider font-semibold">Categoria</label>
+            <label className="text-xs md:text-sm uppercase tracking-wider font-bold text-zinc-400">Categoria</label>
             <div className="space-y-2">
               {CATEGORIES.map((cat) => (
-                <label key={cat} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer">
+                <label key={cat} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer text-white hover:text-lime-400 transition-colors">
                   <input
                     type="radio"
                     name="category"
                     checked={selectedCategory === cat}
                     onChange={() => updateFilterParam('category', cat)}
+                    className="accent-lime-400"
                   />
                   {cat}
                 </label>
@@ -153,7 +154,7 @@ export function AllProducts() {
               {selectedCategory && (
                 <button
                   onClick={() => updateFilterParam('category', null)}
-                  className="text-xs underline text-gray-600"
+                  className="text-xs uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors"
                 >
                   Limpar categoria
                 </button>
@@ -163,15 +164,16 @@ export function AllProducts() {
 
           {/* Size */}
           <div className="space-y-3">
-            <label className="text-xs md:text-sm uppercase tracking-wider font-semibold">Tamanho</label>
+            <label className="text-xs md:text-sm uppercase tracking-wider font-bold text-zinc-400">Tamanho</label>
             <div className="space-y-2">
               {SIZES.map((size) => (
-                <label key={size} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer">
+                <label key={size} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer text-white hover:text-lime-400 transition-colors">
                   <input
                     type="radio"
                     name="size"
                     checked={selectedSize === size}
                     onChange={() => updateFilterParam('size', size)}
+                    className="accent-lime-400"
                   />
                   {size}
                 </label>
@@ -179,7 +181,7 @@ export function AllProducts() {
               {selectedSize && (
                 <button
                   onClick={() => updateFilterParam('size', null)}
-                  className="text-xs underline text-gray-600"
+                  className="text-xs uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors"
                 >
                   Limpar tamanho
                 </button>
@@ -189,10 +191,10 @@ export function AllProducts() {
 
           {/* Price Range */}
           <div className="space-y-3">
-            <label className="text-xs md:text-sm uppercase tracking-wider font-semibold">Preço</label>
+            <label className="text-xs md:text-sm uppercase tracking-wider font-bold text-zinc-400">Preço</label>
             <div className="space-y-2">
               {PRICE_RANGES.map((range, idx) => (
-                <label key={idx} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer">
+                <label key={idx} className="flex items-center gap-2 text-xs md:text-sm cursor-pointer text-white hover:text-lime-400 transition-colors">
                   <input
                     type="radio"
                     name="price"
@@ -211,6 +213,7 @@ export function AllProducts() {
                       }
                       setSearchParams(params);
                     }}
+                    className="accent-lime-400"
                   />
                   {range.label}
                 </label>
@@ -223,7 +226,7 @@ export function AllProducts() {
                     params.delete('maxPrice');
                     setSearchParams(params);
                   }}
-                  className="text-xs underline text-gray-600"
+                  className="text-xs uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors"
                 >
                   Limpar preço
                 </button>
@@ -233,7 +236,7 @@ export function AllProducts() {
 
           {/* New Arrivals */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-xs md:text-sm cursor-pointer">
+            <label className="flex items-center gap-2 text-xs md:text-sm cursor-pointer text-white hover:text-lime-400 transition-colors">
               <input
                 type="checkbox"
                 checked={isNew}
@@ -246,8 +249,9 @@ export function AllProducts() {
                   }
                   setSearchParams(params);
                 }}
+                className="accent-lime-400"
               />
-              <span className="uppercase tracking-wider font-semibold">Apenas Lançamentos</span>
+              <span className="uppercase tracking-wider font-bold">Apenas Lançamentos</span>
             </label>
           </div>
         </aside>
@@ -255,14 +259,14 @@ export function AllProducts() {
         {/* Products Grid */}
         <div className="lg:col-span-4 space-y-6">
           {/* Sort */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b pb-4 gap-3">
-            <p className="text-xs md:text-sm text-gray-600">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-zinc-800 pb-4 gap-3">
+            <p className="text-xs md:text-sm text-zinc-400">
               {loading ? 'Carregando...' : `${products.length} produto(s) encontrado(s)`}
             </p>
             <select
               value={sortBy}
               onChange={(e) => updateFilterParam('sortBy', e.target.value === 'newest' ? null : e.target.value)}
-              className="border px-3 py-2 text-xs md:text-sm focus:outline-none focus:ring-1 focus:ring-black"
+              className="bg-zinc-900 border border-zinc-800 text-white px-3 py-2 text-xs md:text-sm focus:outline-none focus:border-lime-400 transition-colors"
             >
               <option value="newest">Mais novos</option>
               <option value="price_asc">Preço: Crescente</option>
@@ -273,14 +277,14 @@ export function AllProducts() {
           {/* Loading */}
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-lime-400" />
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-sm md:text-base text-gray-600 mb-4">Nenhum produto encontrado com esses filtros.</p>
+              <p className="text-sm md:text-base text-zinc-400 mb-4">Nenhum produto encontrado com esses filtros.</p>
               <button
                 onClick={resetFilters}
-                className="text-xs md:text-sm underline hover:text-black"
+                className="text-xs md:text-sm uppercase tracking-wider text-lime-400 hover:text-lime-300 transition-colors"
               >
                 Limpar todos os filtros
               </button>
@@ -293,6 +297,7 @@ export function AllProducts() {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

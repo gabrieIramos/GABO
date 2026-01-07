@@ -88,25 +88,25 @@ export function Auth() {
   }
 
   return (
-    <div className="max-w-[600px] mx-auto px-4 md:px-6 lg:px-12 py-8">
-      <div className="border p-6 space-y-6">
+    <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24 flex items-center justify-center px-4">
+      <div className="max-w-[500px] w-full bg-zinc-900/50 backdrop-blur-md border border-zinc-800 p-8 space-y-6">
         <div className="flex items-center gap-3">
-          {mode === 'login' ? <LogIn className="w-5 h-5" /> : <UserPlus className="w-5 h-5" />}
+          {mode === 'login' ? <LogIn className="w-6 h-6 text-lime-400" /> : <UserPlus className="w-6 h-6 text-lime-400" />}
           <div>
-            <h1 className="text-xl font-semibold">{mode === 'login' ? 'Entrar' : 'Cadastrar'}</h1>
-            <p className="text-sm text-gray-600">{mode === 'login' ? 'Acesse sua conta' : 'Crie sua conta para continuar'}</p>
+            <h1 className="text-2xl font-black uppercase text-white tracking-tighter">{mode === 'login' ? 'Entrar' : 'Cadastrar'}</h1>
+            <p className="text-sm text-zinc-400">{mode === 'login' ? 'Acesse sua conta' : 'Crie sua conta para continuar'}</p>
           </div>
         </div>
 
         {error && (
-          <div className="text-sm text-red-700 bg-red-50 border border-red-200 px-4 py-3">{error}</div>
+          <div className="text-sm text-red-400 bg-red-950/50 border border-red-900 px-4 py-3">{error}</div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <input
               type="text"
-              className="border px-3 py-2 w-full"
+              className="bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-600 px-4 py-3 w-full focus:outline-none focus:border-lime-400 transition-colors"
               placeholder="Nome"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -116,7 +116,7 @@ export function Auth() {
           )}
           <input
             type="email"
-            className="border px-3 py-2 w-full"
+            className="bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-600 px-4 py-3 w-full focus:outline-none focus:border-lime-400 transition-colors"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -124,7 +124,7 @@ export function Auth() {
           />
           <input
             type="password"
-            className="border px-3 py-2 w-full"
+            className="bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-600 px-4 py-3 w-full focus:outline-none focus:border-lime-400 transition-colors"
             placeholder="Senha (mínimo 6 caracteres)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -134,24 +134,24 @@ export function Auth() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black text-white px-4 py-2 text-sm uppercase tracking-wide hover:bg-gray-900 disabled:opacity-50"
+            className="w-full bg-lime-400 text-black px-4 py-4 font-black uppercase tracking-wider hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
           >
             {loading ? 'Aguarde...' : mode === 'login' ? 'Entrar' : 'Cadastrar'}
           </button>
         </form>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-500">ou</span>
+        <div className="flex items-center gap-2 text-zinc-500">
+          <span className="text-xs">ou</span>
           <button
             onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-            className="text-xs underline"
+            className="text-xs text-lime-400 hover:text-lime-300 uppercase tracking-wider transition-colors"
           >
             {mode === 'login' ? 'Criar uma conta' : 'Já tenho conta'}
           </button>
         </div>
 
-        <div className="space-y-2">
-          <p className="text-xs md:text-sm text-gray-600">Entrar com Google</p>
+        <div className="space-y-3 border-t border-zinc-800 pt-6">
+          <p className="text-xs md:text-sm text-zinc-400 uppercase tracking-wider font-bold">Entrar com Google</p>
           <div ref={googleDivRef} />
         </div>
       </div>

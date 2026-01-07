@@ -115,21 +115,22 @@ export function Profile() {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl md:text-4xl tracking-tight">Meu Perfil</h1>
-          {user && <p className="text-sm text-gray-600 mt-1">{user.email}</p>}
-          {isAdmin() && <span className="inline-block mt-2 bg-black text-white text-xs px-2 py-1 uppercase">Admin</span>}
+    <div className="min-h-screen bg-zinc-950 pt-20 md:pt-24">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white">Meu Perfil</h1>
+            {user && <p className="text-sm text-zinc-400 mt-1">{user.email}</p>}
+            {isAdmin() && <span className="inline-block mt-2 bg-lime-400 text-black text-xs px-3 py-1 font-black uppercase tracking-wider">Admin</span>}
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-sm text-zinc-400 hover:text-lime-400 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            Sair
+          </button>
         </div>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 text-sm text-gray-600 hover:text-black"
-        >
-          <LogOut className="w-4 h-4" />
-          Sair
-        </button>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar */}
@@ -141,10 +142,10 @@ export function Profile() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left font-bold uppercase tracking-wider transition-all ${
                     activeTab === tab.id
-                      ? 'bg-black text-white'
-                      : 'hover:bg-[#F5F5F5]'
+                      ? 'bg-lime-400 text-black shadow-[0_0_20px_rgba(168,255,0,0.3)]'
+                      : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -159,36 +160,36 @@ export function Profile() {
         <div className="lg:col-span-3">
           {activeTab === 'data' && (
             <div className="max-w-2xl">
-              <h2 className="text-2xl mb-6">Dados Pessoais</h2>
+              <h2 className="text-2xl font-black uppercase tracking-wide text-white mb-6">Dados Pessoais</h2>
               <form className="space-y-4">
                 <div>
-                  <label className="block text-sm uppercase tracking-wider mb-2">Nome Completo</label>
+                  <label className="block text-sm uppercase tracking-[0.2em] text-zinc-400 mb-2">Nome Completo</label>
                   <input
                     type="text"
                     defaultValue={user?.name || ''}
-                    className="w-full px-4 py-3 border border-gray-300 focus:border-black outline-none"
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white focus:border-lime-400 outline-none transition-colors placeholder:text-zinc-600"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm uppercase tracking-wider mb-2">Email</label>
+                  <label className="block text-sm uppercase tracking-[0.2em] text-zinc-400 mb-2">Email</label>
                   <input
                     type="email"
                     defaultValue={user?.email || ''}
-                    className="w-full px-4 py-3 border border-gray-300 focus:border-black outline-none"
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-zinc-500 outline-none"
                     disabled
                   />
                 </div>
                 <div>
-                  <label className="block text-sm uppercase tracking-wider mb-2">Telefone</label>
+                  <label className="block text-sm uppercase tracking-[0.2em] text-zinc-400 mb-2">Telefone</label>
                   <input
                     type="tel"
                     placeholder="(11) 99999-9999"
-                    className="w-full px-4 py-3 border border-gray-300 focus:border-black outline-none"
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white focus:border-lime-400 outline-none transition-colors placeholder:text-zinc-600"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="bg-black text-white px-8 py-3 uppercase tracking-wider hover:bg-gray-900 transition-colors"
+                  className="bg-lime-400 text-black px-8 py-3 font-black uppercase tracking-wider hover:shadow-[0_0_30px_rgba(168,255,0,0.6)] transition-all duration-300"
                 >
                   Salvar Alterações
                 </button>
@@ -198,15 +199,15 @@ export function Profile() {
 
           {activeTab === 'address' && (
             <div className="max-w-2xl">
-              <h2 className="text-2xl mb-6">Endereços</h2>
-              <p className="text-gray-600">Gerencie seus endereços de entrega.</p>
+              <h2 className="text-2xl font-black uppercase tracking-wide text-white mb-6">Endereços</h2>
+              <p className="text-zinc-400">Gerencie seus endereços de entrega.</p>
             </div>
           )}
 
           {activeTab === 'orders' && !isAdmin() && (
             <div>
-              <h2 className="text-2xl mb-6">Meus Pedidos</h2>
-              <p className="text-gray-600">Visualize seu histórico de pedidos.</p>
+              <h2 className="text-2xl font-black uppercase tracking-wide text-white mb-6">Meus Pedidos</h2>
+              <p className="text-zinc-400">Visualize seu histórico de pedidos.</p>
             </div>
           )}
 
@@ -214,40 +215,40 @@ export function Profile() {
           {activeTab === 'admin-products' && (
             <div>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl">Gestão de Produtos</h2>
+                <h2 className="text-2xl font-black uppercase tracking-wide text-white">Gestão de Produtos</h2>
                 <button
                   onClick={() => { setEditingProduct(null); setShowProductForm(true); }}
-                  className="flex items-center gap-2 bg-black text-white px-4 py-2 text-sm uppercase hover:bg-gray-900"
+                  className="flex items-center gap-2 bg-lime-400 text-black px-4 py-2 text-sm font-black uppercase hover:shadow-[0_0_20px_rgba(168,255,0,0.5)] transition-all"
                 >
                   <Plus className="w-4 h-4" /> Adicionar Produto
                 </button>
               </div>
 
               {loading ? (
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="flex items-center gap-2 text-lime-400">
                   <Loader2 className="w-4 h-4 animate-spin" /> Carregando...
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {products.map((product) => (
-                    <div key={product.id} className="border p-4 space-y-2">
+                    <div key={product.id} className="bg-zinc-900 border border-zinc-800 p-4 space-y-2">
                       {product.images?.[0] && (
-                        <img src={product.images[0]} alt={product.name} className="w-full h-40 object-cover" />
+                        <img src={product.images[0]} alt={product.name} className="w-full h-40 object-cover border border-zinc-800 bg-zinc-950" />
                       )}
-                      <h3 className="font-semibold">{product.name}</h3>
-                      <p className="text-sm text-gray-600">{product.team}</p>
-                      <p className="font-bold">R$ {product.price.toFixed(2).replace('.', ',')}</p>
-                      <p className="text-xs text-gray-500">Estoque: {product.stock}</p>
+                      <h3 className="font-bold text-white">{product.name}</h3>
+                      <p className="text-sm text-zinc-500">{product.team}</p>
+                      <p className="font-black text-lime-400">R$ {product.price.toFixed(2).replace('.', ',')}</p>
+                      <p className="text-xs text-zinc-500">Estoque: {product.stock}</p>
                       <div className="flex gap-2 pt-2">
                         <button
                           onClick={() => { setEditingProduct(product); setShowProductForm(true); }}
-                          className="flex-1 flex items-center justify-center gap-1 border px-3 py-2 text-sm hover:bg-gray-100"
+                          className="flex-1 flex items-center justify-center gap-1 border border-zinc-700 bg-zinc-900 text-white px-3 py-2 text-sm hover:border-lime-400 transition-colors"
                         >
                           <Pencil className="w-3 h-3" /> Editar
                         </button>
                         <button
                           onClick={() => handleDeleteProduct(product.id)}
-                          className="flex-1 flex items-center justify-center gap-1 border border-red-300 text-red-700 px-3 py-2 text-sm hover:bg-red-50"
+                          className="flex-1 flex items-center justify-center gap-1 border border-red-900 text-red-400 px-3 py-2 text-sm hover:bg-red-950 transition-colors"
                         >
                           <Trash2 className="w-3 h-3" /> Excluir
                         </button>
@@ -271,29 +272,29 @@ export function Profile() {
           {/* ADMIN: Pedidos */}
           {activeTab === 'admin-orders' && (
             <div>
-              <h2 className="text-2xl mb-6">Todos os Pedidos</h2>
+              <h2 className="text-2xl font-black uppercase tracking-wide text-white mb-6">Todos os Pedidos</h2>
               {loading ? (
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="flex items-center gap-2 text-lime-400">
                   <Loader2 className="w-4 h-4 animate-spin" /> Carregando...
                 </div>
               ) : (
                 <div className="space-y-4">
                   {orders.map((order) => (
-                    <div key={order.id} className="border p-4">
+                    <div key={order.id} className="bg-zinc-900 border border-zinc-800 p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <p className="font-semibold">Pedido #{order.id.slice(0, 8)}</p>
-                          <p className="text-sm text-gray-600">{order.user.name} ({order.user.email})</p>
-                          <p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString('pt-BR')}</p>
+                          <p className="font-bold text-white">Pedido #{order.id.slice(0, 8)}</p>
+                          <p className="text-sm text-zinc-400">{order.user.name} ({order.user.email})</p>
+                          <p className="text-xs text-zinc-500">{new Date(order.createdAt).toLocaleDateString('pt-BR')}</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold">R$ {order.totalAmount.toFixed(2).replace('.', ',')}</p>
-                          <span className="text-xs bg-gray-100 px-2 py-1">{order.status}</span>
+                          <p className="font-black text-lime-400">R$ {order.totalAmount.toFixed(2).replace('.', ',')}</p>
+                          <span className="text-xs bg-lime-950 text-lime-400 border border-lime-700 px-2 py-1">{order.status}</span>
                         </div>
                       </div>
                     </div>
                   ))}
-                  {orders.length === 0 && <p className="text-gray-600">Nenhum pedido encontrado.</p>}
+                  {orders.length === 0 && <p className="text-zinc-400">Nenhum pedido encontrado.</p>}
                 </div>
               )}
             </div>
@@ -302,45 +303,46 @@ export function Profile() {
           {/* ADMIN: Usuários */}
           {activeTab === 'admin-users' && (
             <div>
-              <h2 className="text-2xl mb-6">Usuários Cadastrados</h2>
+              <h2 className="text-2xl font-black uppercase tracking-wide text-white mb-6">Usuários Cadastrados</h2>
               {loading ? (
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="flex items-center gap-2 text-lime-400">
                   <Loader2 className="w-4 h-4 animate-spin" /> Carregando...
                 </div>
               ) : (
-                <div className="border">
+                <div className="bg-zinc-900 border border-zinc-800">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b">
+                    <thead className="bg-zinc-950 border-b border-zinc-800">
                       <tr>
-                        <th className="px-4 py-3 text-left text-xs uppercase">Nome</th>
-                        <th className="px-4 py-3 text-left text-xs uppercase">Email</th>
-                        <th className="px-4 py-3 text-left text-xs uppercase">Role</th>
-                        <th className="px-4 py-3 text-left text-xs uppercase">Cadastro</th>
+                        <th className="px-4 py-3 text-left text-xs uppercase tracking-[0.2em] text-zinc-400">Nome</th>
+                        <th className="px-4 py-3 text-left text-xs uppercase tracking-[0.2em] text-zinc-400">Email</th>
+                        <th className="px-4 py-3 text-left text-xs uppercase tracking-[0.2em] text-zinc-400">Role</th>
+                        <th className="px-4 py-3 text-left text-xs uppercase tracking-[0.2em] text-zinc-400">Cadastro</th>
                       </tr>
                     </thead>
                     <tbody>
                       {users.map((u) => (
-                        <tr key={u.id} className="border-b hover:bg-gray-50">
-                          <td className="px-4 py-3">{u.name}</td>
-                          <td className="px-4 py-3">{u.email}</td>
+                        <tr key={u.id} className="border-b border-zinc-800 hover:bg-zinc-800/50 transition-colors">
+                          <td className="px-4 py-3 text-white">{u.name}</td>
+                          <td className="px-4 py-3 text-zinc-400">{u.email}</td>
                           <td className="px-4 py-3">
-                            <span className={`text-xs px-2 py-1 ${u.role === 'admin' ? 'bg-black text-white' : 'bg-gray-200'}`}>
+                            <span className={`text-xs px-2 py-1 font-black ${u.role === 'admin' ? 'bg-lime-400 text-black' : 'bg-zinc-800 text-zinc-400'}`}>
                               {u.role}
                             </span>
                           </td>
-                          <td className="px-4 py-3 text-sm text-gray-600">
+                          <td className="px-4 py-3 text-sm text-zinc-500">
                             {new Date(u.createdAt).toLocaleDateString('pt-BR')}
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  {users.length === 0 && <p className="px-4 py-6 text-gray-600 text-center">Nenhum usuário encontrado.</p>}
+                  {users.length === 0 && <p className="px-4 py-6 text-zinc-400 text-center">Nenhum usuário encontrado.</p>}
                 </div>
               )}
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
@@ -385,15 +387,15 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-        <h3 className="text-xl font-semibold mb-4">{product ? 'Editar Produto' : 'Novo Produto'}</h3>
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+      <div className="bg-zinc-900 border border-zinc-800 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+        <h3 className="text-xl font-black uppercase tracking-wide text-white mb-4">{product ? 'Editar Produto' : 'Novo Produto'}</h3>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="block text-sm mb-1">Nome</label>
+            <label className="block text-sm text-zinc-400 mb-1">Nome</label>
             <input
               type="text"
-              className="w-full border px-3 py-2"
+              className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
@@ -401,19 +403,19 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm mb-1">Time/Seleção</label>
+              <label className="block text-sm text-zinc-400 mb-1">Time/Seleção</label>
               <input
                 type="text"
-                className="w-full border px-3 py-2"
+                className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
                 value={formData.team}
                 onChange={(e) => setFormData({ ...formData, team: e.target.value })}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">Categoria</label>
+              <label className="block text-sm text-zinc-400 mb-1">Categoria</label>
               <select
-                className="w-full border px-3 py-2"
+                className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 required
@@ -427,21 +429,21 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm mb-1">Preço (R$)</label>
+              <label className="block text-sm text-zinc-400 mb-1">Preço (R$)</label>
               <input
                 type="number"
                 step="0.01"
-                className="w-full border px-3 py-2"
+                className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
                 required
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">Estoque</label>
+              <label className="block text-sm text-zinc-400 mb-1">Estoque</label>
               <input
                 type="number"
-                className="w-full border px-3 py-2"
+                className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
                 value={formData.stock}
                 onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) })}
                 required
@@ -449,9 +451,9 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
             </div>
           </div>
           <div>
-            <label className="block text-sm mb-1">Descrição</label>
+            <label className="block text-sm text-zinc-400 mb-1">Descrição</label>
             <textarea
-              className="w-full border px-3 py-2"
+              className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors"
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -459,19 +461,19 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">Tamanhos (separados por vírgula)</label>
+            <label className="block text-sm text-zinc-400 mb-1">Tamanhos (separados por vírgula)</label>
             <input
               type="text"
-              className="w-full border px-3 py-2"
+              className="w-full bg-zinc-950 border border-zinc-800 text-white px-3 py-2 focus:outline-none focus:border-lime-400 transition-colors placeholder:text-zinc-600"
               value={formData.sizes.join(', ')}
               onChange={(e) => setFormData({ ...formData, sizes: e.target.value.split(',').map(s => s.trim()) })}
               placeholder="P, M, G, GG"
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">Imagens do produto</label>
+            <label className="block text-sm text-zinc-400 mb-1">Imagens do produto</label>
             <div
-              className={`border-2 border-dashed p-3 ${isDragging ? 'border-black bg-black/5' : 'border-gray-300'}`}
+              className={`border-2 border-dashed p-3 ${isDragging ? 'border-lime-400 bg-lime-950/20' : 'border-zinc-700'}`}
               onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
               onDrop={(e) => {
@@ -483,11 +485,11 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
                 {existingImages.map((img, idx) => (
-                  <div key={idx} className="relative border">
+                  <div key={idx} className="relative border border-zinc-800">
                     <img src={img} alt={`Imagem ${idx+1}`} className="w-full h-24 object-cover" />
                     <button
                       type="button"
-                      className="absolute top-1 right-1 bg-white/80 border px-2 py-1 text-xs"
+                      className="absolute top-1 right-1 bg-red-950 border border-red-800 text-red-400 px-2 py-1 text-xs hover:bg-red-900"
                       onClick={() => setExistingImages(existingImages.filter((_, i) => i !== idx))}
                     >
                       Remover
@@ -495,11 +497,11 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
                   </div>
                 ))}
                 {newFiles.map((file, idx) => (
-                  <div key={`new-${idx}`} className="relative border">
+                  <div key={`new-${idx}`} className="relative border border-zinc-800">
                     <img src={URL.createObjectURL(file)} alt={`Novo ${idx+1}`} className="w-full h-24 object-cover" />
                     <button
                       type="button"
-                      className="absolute top-1 right-1 bg-white/80 border px-2 py-1 text-xs"
+                      className="absolute top-1 right-1 bg-red-950 border border-red-800 text-red-400 px-2 py-1 text-xs hover:bg-red-900"
                       onClick={() => setNewFiles(newFiles.filter((_, i) => i !== idx))}
                     >
                       Remover
@@ -507,7 +509,7 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
                   </div>
                 ))}
               </div>
-              <div className="text-center text-xs text-gray-600 py-2">
+              <div className="text-center text-xs text-zinc-500 py-2">
                 Arraste e solte imagens aqui ou selecione abaixo
               </div>
             </div>
@@ -520,6 +522,7 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
                   const files = Array.from(e.target.files || []);
                   setNewFiles([...newFiles, ...files]);
                 }}
+                className="text-zinc-400"
               />
             </div>
           </div>
@@ -529,15 +532,16 @@ function ProductFormModal({ product, onClose, onSave, token }: { product: Produc
                 type="checkbox"
                 checked={formData.isNew}
                 onChange={(e) => setFormData({ ...formData, isNew: e.target.checked })}
+                className="accent-lime-400"
               />
-              <span className="text-sm">Produto novo / Lançamento</span>
+              <span className="text-sm text-zinc-400">Produto novo / Lançamento</span>
             </label>
           </div>
           <div className="flex gap-3 pt-4">
-            <button type="button" onClick={onClose} className="flex-1 border px-4 py-2 hover:bg-gray-100">
+            <button type="button" onClick={onClose} className="flex-1 border border-zinc-700 bg-zinc-900 text-white px-4 py-2 hover:bg-zinc-800 transition-colors">
               Cancelar
             </button>
-            <button type="submit" disabled={loading} className="flex-1 bg-black text-white px-4 py-2 hover:bg-gray-900 disabled:opacity-50">
+            <button type="submit" disabled={loading} className="flex-1 bg-lime-400 text-black px-4 py-2 font-black hover:shadow-[0_0_20px_rgba(168,255,0,0.5)] transition-all disabled:opacity-50 disabled:hover:shadow-none">
               {loading ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
