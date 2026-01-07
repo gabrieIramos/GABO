@@ -12,12 +12,14 @@ import { Terms } from './pages/Terms';
 import { About } from './pages/About';
 import { Auth } from './pages/Auth';
 import { ToastContainer } from './components/ToastContainer';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Checkout } from './pages/Checkout';
 
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1">
